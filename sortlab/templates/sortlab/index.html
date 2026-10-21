@@ -1,0 +1,247 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SortLab | Interactive Sorting Visualizer</title>
+  <link rel="stylesheet" href="{% static 'sortlab/css/style.css' %}">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="top">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <h1>SortLab</h1>
+          <p>Interactive algorithm learning studio</p>
+        </div>
+      </div>
+      <div class="status">
+        <span class="dot"></span>Ready to visualize · Runs locally in your browser
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Learn by watching</div>
+        <h2>Sorting, made <span style="color:var(--teal)">visible.</span></h2>
+        <p>
+          Explore how sorting algorithms rearrange values. Enter your own numbers,
+          compare methods, and step through the logic one operation at a time.
+        </p>
+      </div>
+      <div class="tag">● 5 algorithms · Manual input · Step mode</div>
+    </section>
+
+    <div class="layout">
+
+      <!-- Sidebar -->
+      <aside class="panel sidebar">
+
+        <!-- 01 / Your data -->
+        <section>
+          <h3 class="section-title">01 / Your data</h3>
+
+          <div class="field">
+            <label for="manualInput">Numbers separated by commas, spaces or semicolons</label>
+            <input id="manualInput" value="42, 18, 63, 7, 31, 55, 12, 84" placeholder="e.g. 12, 4, 19, 7">
+            <p class="hint">Integers, decimals, negatives and duplicates supported. Maximum 80 values.</p>
+          </div>
+
+          <div class="row">
+            <button class="primary" id="loadBtn">Use these numbers</button>
+            <button id="randomBtn">Randomize</button>
+          </div>
+
+          <div class="toast" id="toast" role="status"></div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- 02 / Algorithm -->
+        <section>
+          <h3 class="section-title">02 / Algorithm</h3>
+
+          <div class="field">
+            <label for="algorithm">Choose sorting method</label>
+            <select id="algorithm">
+              <option value="bubble">Bubble Sort</option>
+              <option value="selection">Selection Sort</option>
+              <option value="insertion">Insertion Sort</option>
+              <option value="merge">Merge Sort</option>
+              <option value="quick">Quick Sort</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="speed">Animation speed</label>
+            <input type="range" id="speed" min="1" max="10" value="6">
+            <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:10px">
+              <span>Slow</span>
+              <span>Fast</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="arraySize">Random array size: <b id="sizeValue">18</b></label>
+            <input type="range" id="arraySize" min="5" max="45" value="18">
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- 03 / Controls -->
+        <section>
+          <h3 class="section-title">03 / Controls</h3>
+
+          <div class="row">
+            <button class="primary" id="startBtn">▶ Start</button>
+            <button id="stepBtn">Step →</button>
+          </div>
+
+          <div class="row" style="margin-top:8px">
+            <button id="pauseBtn">Ⅱ Pause</button>
+            <button id="resetBtn">↺ Reset</button>
+          </div>
+
+          <p class="hint">Step applies one operation. Start plays the sequence automatically.</p>
+        </section>
+
+      </aside>
+
+      <!-- Main content -->
+      <main class="main">
+
+        <!-- Toolbar -->
+        <section class="panel toolbar">
+          <div>
+            <div class="label">Selected algorithm</div>
+            <div class="algo-name" id="algoName">Bubble Sort</div>
+            <div class="complexity" id="complexity">Time: O(n²) average · Space: O(1)</div>
+          </div>
+          <div class="actions">
+            <button id="copyBtn">Copy result</button>
+            <button class="teal" id="sortNowBtn">Sort instantly</button>
+          </div>
+        </section>
+
+        <!-- Visualization -->
+        <section class="panel visual">
+          <div class="visual-head">
+            <h3>Array visualization</h3>
+            <div class="legend">
+              <span><i class="swatch" style="background:#8198ff"></i>Unsorted</span>
+              <span><i class="swatch" style="background:#ffc66d"></i>Compare</span>
+              <span><i class="swatch" style="background:#ff7f98"></i>Swap / write</span>
+              <span><i class="swatch" style="background:#4bd6a0"></i>Sorted</span>
+            </div>
+          </div>
+
+          <div class="chart" id="chart" aria-label="Sorting array bars"></div>
+
+          <div class="progress-track">
+            <div class="progress-fill" id="progress"></div>
+          </div>
+
+          <div class="visual-foot">
+            <span id="operationText">Ready — choose Start or Step.</span>
+            <span id="stepCount">0 / 0 operations</span>
+          </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats">
+          <div class="panel stat">
+            <div class="slabel">Comparisons</div>
+            <div class="value" id="comparisons">0</div>
+            <div class="sub">Values checked</div>
+          </div>
+          <div class="panel stat">
+            <div class="slabel">Moves / writes</div>
+            <div class="value" id="moves">0</div>
+            <div class="sub">Array changes</div>
+          </div>
+          <div class="panel stat">
+            <div class="slabel">Operations</div>
+            <div class="value" id="operations">0</div>
+            <div class="sub">Events applied</div>
+          </div>
+          <div class="panel stat">
+            <div class="slabel">Elapsed</div>
+            <div class="value" id="elapsed">0.0s</div>
+            <div class="sub">Playback time</div>
+          </div>
+        </section>
+
+        <!-- Bottom: quick guide + activity log -->
+        <div class="bottom">
+
+          <section class="panel info">
+            <h3>Algorithm quick guide</h3>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Algorithm</th>
+                  <th>Average time</th>
+                  <th>Extra space</th>
+                </tr>
+              </thead>
+              <tbody id="complexityRows">
+                <tr class="active" data-algo="bubble">
+                  <td>Bubble Sort</td>
+                  <td><span class="pill">O(n²)</span></td>
+                  <td>O(1)</td>
+                </tr>
+                <tr data-algo="selection">
+                  <td>Selection Sort</td>
+                  <td><span class="pill">O(n²)</span></td>
+                  <td>O(1)</td>
+                </tr>
+                <tr data-algo="insertion">
+                  <td>Insertion Sort</td>
+                  <td><span class="pill">O(n²)</span></td>
+                  <td>O(1)</td>
+                </tr>
+                <tr data-algo="merge">
+                  <td>Merge Sort</td>
+                  <td><span class="pill">O(n log n)</span></td>
+                  <td>O(n)</td>
+                </tr>
+                <tr data-algo="quick">
+                  <td>Quick Sort</td>
+                  <td><span class="pill">O(n log n)</span></td>
+                  <td>O(log n) avg.</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="hint">Quick Sort worst-case time is O(n²).</p>
+          </section>
+
+          <section class="panel info">
+            <h3>Activity log</h3>
+            <div class="log" id="log">
+              <div class="empty">Your sorting steps will appear here.</div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      SortLab · Educational algorithm visualization · No data is sent to a server
+    </footer>
+
+  </div>
+
+  <script src="{% static 'sortlab/js/visualizer.js' %}" defer></script>
+</body>
+
+</html>
