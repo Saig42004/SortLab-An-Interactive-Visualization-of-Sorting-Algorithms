@@ -1,73 +1,176 @@
-# SortLab — Interactive Sorting Algorithm Visualizer
+# SortLab --- Interactive Sorting Algorithm Visualizer
 
-## 1. Project Overview
+SortLab is an educational web application that helps learners understand
+sorting algorithms by showing how an array changes during execution.
+Users can enter their own numbers, choose an algorithm, and either watch
+the visualization play automatically or inspect it one operation at a
+time.
 
-**SortLab** is an educational web application that helps students understand how sorting algorithms work. Instead of only seeing the final sorted list, users can watch values being compared, swapped, or written into new positions through an animated bar visualization.
+The application uses **Django** to serve the website and **HTML, CSS,
+and JavaScript** for the user interface and browser-based visualization.
+The sorting logic runs in the browser; the current project does not
+require a custom database model for sorting.
 
-The project combines a front-end interface built with **HTML, CSS, and JavaScript** with **Django**, which serves the website through a Python web server.
+## Table of Contents
 
-## 2. Project Objectives
+-   [Problem Statement](#problem-statement)
+-   [Objectives](#objectives)
+-   [Features](#features)
+-   [Algorithms](#algorithms)
+-   [Technology Stack](#technology-stack)
+-   [Application Architecture](#application-architecture)
+-   [Project Structure](#project-structure)
+-   [Installation and Local Setup](#installation-and-local-setup)
+-   [How to Use](#how-to-use)
+-   [Complexity Reference](#complexity-reference)
+-   [Design Decisions and
+    Limitations](#design-decisions-and-limitations)
+-   [Troubleshooting](#troubleshooting)
+-   [Future Improvements](#future-improvements)
 
-- Demonstrate how common sorting algorithms arrange numbers in ascending order.
-- Let users enter their own numbers and observe how the selected algorithm processes them.
-- Provide step-by-step and automatic playback modes.
-- Display useful statistics such as comparisons, moves/writes, operations, and elapsed time.
-- Present algorithm time and space complexity for learning and comparison.
+## Problem Statement
 
-## 3. Main Features
+Sorting algorithms are often taught through pseudocode or examples that
+show only the final sorted output. This can make it difficult for
+learners to understand how comparisons, swaps, and insertions transform
+an array. SortLab addresses this learning challenge by making algorithm
+operations visible and interactive.
+
+## Objectives
+
+-   Visualize how common sorting algorithms arrange values in ascending
+    order.
+-   Allow users to test custom input arrays.
+-   Support automatic playback and step-by-step inspection.
+-   Display operation counters and algorithm complexity information.
+-   Provide a browser-based learning tool served by Django.
+
+## Features
 
 ### Custom input
 
-Users can enter numbers separated by commas, spaces, or semicolons. The visualizer supports integers, decimal values, negative numbers, and duplicate values, with a maximum of 80 values.
+-   Enter numbers separated by commas, spaces, or semicolons.
+-   Supports integers, decimal values, negative numbers, and duplicates.
+-   Supports up to 80 values.
 
-### Five sorting algorithms
+### Controls
 
-1. **Bubble Sort** — repeatedly compares neighboring values and swaps them when they are out of order.
-2. **Selection Sort** — repeatedly finds the smallest value in the unsorted section and places it in the next position.
-3. **Insertion Sort** — inserts each value into its correct position within the already ordered section.
-4. **Merge Sort** — divides the array into smaller sections, sorts them, and merges the sections back together.
-5. **Quick Sort** — partitions the array around a pivot and sorts the resulting sections.
+-   **Use these numbers:** load the entered values.
+-   **Randomize:** generate a random array.
+-   **Start:** play the operation sequence automatically.
+-   **Step:** apply one operation at a time.
+-   **Pause:** pause automatic playback.
+-   **Reset:** restore the original array and prepare the selected
+    algorithm again.
+-   **Sort instantly:** display the final sorted array without animated
+    playback.
+-   **Copy result:** copy the current array when clipboard access is
+    available.
+-   **Animation speed:** adjust playback speed.
 
-### Visualization controls
+### Visualization and learning support
 
-- **Use these numbers:** loads the values typed by the user.
-- **Randomize:** creates a random array.
-- **Start:** plays the sorting operations automatically.
-- **Step:** applies one operation at a time.
-- **Pause:** stops automatic playback.
-- **Reset:** returns to the original array and prepares the selected algorithm again.
-- **Sort instantly:** shows the final sorted array without animated playback.
-- **Copy result:** copies the current array when clipboard access is available; if it is unavailable, the result is placed in the input field for manual copying.
-- **Animation speed:** changes the playback speed.
+-   Animated bar visualization of array values.
+-   Highlights for comparisons, swaps/writes, pivot selection, and
+    sorted positions.
+-   Activity log describing the current operation.
+-   Counters for comparisons, moves/writes, and visualization
+    operations.
+-   Elapsed playback-time display.
+-   Time and space complexity reference for supported algorithms.
 
-### Statistics and learning guide
+## Algorithms
 
-The interface displays:
+  ------------------------------------------------------------------------
+  Algorithm   How it works    Average time Worst-case time   Typical extra
+                                                                     space
+  ----------- ------------ --------------- --------------- ---------------
+  Bubble Sort Repeatedly             O(n²)           O(n²)            O(1)
+              compares                                     
+              adjacent                                     
+              values and                                   
+              swaps them                                   
+              when out of                                  
+              order.                                       
 
-- **Comparisons:** comparisons performed between values.
-- **Moves / writes:** array changes recorded by the visualizer.
-- **Operations:** visualization events that have been applied.
-- **Elapsed time:** time recorded by the visualizer during playback.
+  Selection   Finds the              O(n²)           O(n²)            O(1)
+  Sort        smallest                                     
+              value in the                                 
+              unsorted                                     
+              section and                                  
+              places it                                    
+              next.                                        
 
-It also includes a complexity guide and an activity log describing the operations.
+  Insertion   Inserts each           O(n²)           O(n²)            O(1)
+  Sort        value into                                   
+              its correct                                  
+              position in                                  
+              the sorted                                   
+              section.                                     
 
-## 4. Technologies Used
+  Merge Sort  Divides the       O(n log n)      O(n log n)            O(n)
+              array, sorts                                 
+              the parts,                                   
+              and merges                                   
+              them.                                        
 
-| Technology | Purpose |
-|---|---|
-| HTML | Defines the page structure and interface elements. |
-| CSS | Styles the interface, bar chart, controls, layout, and responsive design. |
-| JavaScript | Implements the sorting-operation sequences, animation, user interactions, and statistics. |
-| Python | Runs the Django application. |
-| Django | Maps the website URL to a view and renders the HTML template. |
+  Quick Sort  Partitions        O(n log n)           O(n²)        O(log n)
+              around a                                       average; O(n)
+              pivot and                                         worst case
+              sorts the                                    
+              resulting                                    
+              sections.                                    
+  ------------------------------------------------------------------------
 
-**Important design note:** The sorting algorithms and their visualization logic run in the browser using JavaScript. Django serves the web page; this project does not require a custom database model for the sorting functionality.
+These are standard theoretical complexities; actual behavior depends on
+the implementation and input.
 
-## 5. Project Structure
+## Technology Stack
 
-The main project folder contains the following files:
+  -----------------------------------------------------------------------
+  Technology                          Purpose
+  ----------------------------------- -----------------------------------
+  Python                              Runtime language for the Django
+                                      application.
 
-```text
+  Django                              Handles URL routing and renders the
+                                      page template.
+
+  HTML                                Defines the page structure and
+                                      interface elements.
+
+  CSS                                 Styles the layout, controls, and
+                                      visualization.
+
+  JavaScript                          Implements sorting operations,
+                                      animation, user interactions, and
+                                      statistics.
+
+  Git and GitHub                      Version control and source-code
+                                      hosting.
+  -----------------------------------------------------------------------
+
+## Application Architecture
+
+1.  A browser requests the SortLab page.
+2.  Django routes the request to the application view and renders the
+    HTML template.
+3.  The browser loads the page styling and JavaScript.
+4.  The user enters an array and selects an algorithm.
+5.  JavaScript prepares the visualization's operation sequence and
+    updates the bars, activity log, and counters during playback.
+6.  The user can reset the visualization or try another algorithm with
+    the same input.
+
+**Architecture note:** Django serves the page; sorting and animation
+logic run in the browser. The current project does not save user arrays
+or results to a database.
+
+## Project Structure
+
+The expected project layout is:
+
+``` text
 SortLab_Django/
 ├── manage.py
 ├── requirements.txt
@@ -100,281 +203,233 @@ SortLab_Django/
 
 ### Important files
 
-- `manage.py` — Django’s command-line utility for running project commands.
-- `requirements.txt` — lists the Python package requirements.
-- `sortlab_project/settings.py` — Django configuration, including installed apps and template settings.
-- `sortlab_project/urls.py` — connects the root URL to the app’s URL configuration.
-- `sortlab/views.py` — renders the `sortlab/index.html` template.
-- `sortlab/urls.py` — defines URL patterns for the SortLab app.
-- `sortlab/templates/sortlab/index.html` — contains the HTML structure of the interface.
-- `sortlab/static/sortlab/css/style.css` — styles the interface and visualization.
-- `sortlab/static/sortlab/js/visualizer.js` — implements sorting operations, animation, interactions, and statistics.
-- `.gitignore` — prevents local and generated files such as `.venv/` from being committed to Git.
+-   `manage.py` --- Django command-line entry point.
+-   `requirements.txt` --- Python package dependencies.
+-   `sortlab_project/settings.py` --- project configuration and
+    installed apps.
+-   `sortlab_project/urls.py` --- project-level URL routing.
+-   `sortlab/views.py` --- handles the page request and renders the
+    template.
+-   `sortlab/urls.py` --- application-level URL patterns.
+-   `sortlab/templates/sortlab/index.html` --- interface structure.
+-   `sortlab/static/sortlab/css/style.css` --- visual styling.
+-   `sortlab/static/sortlab/js/visualizer.js` --- sorting operations,
+    animation, controls, and statistics.
+-   `.gitignore` --- excludes local or generated files that should not
+    be committed.
 
-## 6. Installation and Setup
+Adjust this tree if the actual repository uses a different layout.
+
+## Installation and Local Setup
 
 ### Requirements
 
-- Python 3.10 or newer is recommended.
-- The extracted `SortLab_Django` project folder.
-- A terminal such as Command Prompt, PowerShell, Linux Terminal, or the VS Code terminal.
-- Internet access for the initial Django package installation.
+-   Python 3.10 or newer recommended.
+-   A terminal such as Command Prompt, PowerShell, or VS Code terminal.
+-   Internet access to install dependencies initially.
+-   Git is optional if downloading the project as a ZIP.
 
-### Step 1: Open the project folder
+### 1. Get the project
 
-Open the project in VS Code, or open a terminal and change directory to the folder containing `manage.py`.
+Clone the repository using its GitHub URL:
 
-#### Windows — Command Prompt (CMD)
-
-```cmd
-cd path\to\SortLab_Django
-dir
+``` bash
+git clone <your-repository-url>
+cd SortLab_Django
 ```
 
-#### Windows — PowerShell
+Alternatively, download the repository as a ZIP and extract it. Continue
+from the folder containing `manage.py`.
 
-```powershell
-Set-Location "path\to\SortLab_Django"
-Get-ChildItem
-```
+### 2. Create a virtual environment
 
-#### Linux
+**Windows:**
 
-```bash
-cd /path/to/SortLab_Django
-ls
-```
-
-Continue only when the listing shows `manage.py` in the current folder.
-
-### Step 2: Create a virtual environment
-
-#### Windows — CMD or PowerShell
-
-```cmd
+``` bash
 python -m venv .venv
 ```
 
-If the `python` command is not recognized on Windows, try:
+If `python` is not recognized, try `py -m venv .venv`.
 
-```cmd
-py -m venv .venv
-```
+**Linux:**
 
-#### Linux
-
-```bash
+``` bash
 python3 -m venv .venv
 ```
 
-If Linux reports that `venv` is unavailable, install the package for your Python version using your distribution's package manager. For example, on Ubuntu/Debian:
+### 3. Activate the environment
 
-```bash
-sudo apt update
-sudo apt install python3-venv
-```
+**Windows --- Command Prompt:**
 
-### Step 3: Activate the virtual environment
-
-#### Windows — Command Prompt (CMD)
-
-```cmd
+``` cmd
 .venv\Scripts\activate.bat
 ```
 
-#### Windows — PowerShell
+**Windows --- PowerShell:**
 
-```powershell
+``` powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks script activation, you can use Command Prompt instead. Alternatively, review your organization's security policy before changing PowerShell execution settings.
+**Linux:**
 
-#### Linux
-
-```bash
+``` bash
 source .venv/bin/activate
 ```
 
-When activation succeeds, the terminal prompt usually begins with `(.venv)`.
+The prompt usually displays `(.venv)` after activation.
 
-### Step 4: Install dependencies
+### 4. Install dependencies
 
-With the virtual environment activated, run the appropriate command.
-
-#### Windows
-
-```cmd
+``` bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-#### Linux
+If `requirements.txt` is not present, a compatible Django version can be
+installed as a fallback:
 
-```bash
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-If `requirements.txt` is unavailable, install Django directly:
-
-```bash
+``` bash
 python -m pip install "Django>=5.0,<6.0"
 ```
 
-### Step 5: Apply Django migrations
+### 5. Apply migrations
 
-This step initializes Django's default database tables if the built-in Django apps are enabled. SortLab does not need a custom database model for its sorting functionality.
-
-#### Windows
-
-```cmd
+``` bash
 python manage.py migrate
 ```
 
-#### Linux
+This initializes the default tables for enabled Django apps. The sorting
+workflow does not require a custom database model.
 
-```bash
-python manage.py migrate
-```
+### 6. Start the development server
 
-### Step 6: Start the development server
-
-#### Windows
-
-```cmd
+``` bash
 python manage.py runserver
 ```
 
-#### Linux
+Open **http://127.0.0.1:8000/** in your browser. Keep the terminal open
+while using the site. Press **Ctrl+C** to stop the server.
 
-```bash
-python manage.py runserver
-```
+If port 8000 is busy, use:
 
-Open the following address in your browser:
-
-**http://127.0.0.1:8000/**
-
-Keep the terminal open while using the website. Press **Ctrl + C** to stop the server.
-
-### Optional: Use a different port
-
-If port `8000` is already in use, run:
-
-```bash
+``` bash
 python manage.py runserver 8001
 ```
 
 Then open **http://127.0.0.1:8001/**.
 
-### Step 7: Deactivate the virtual environment
+## How to Use
 
-When you finish working, you can deactivate the environment.
+1.  Open the application in your browser.
+2.  Enter an array, for example `42, 18, 63, 7, 31`.
+3.  Click **Use these numbers**.
+4.  Select one of the five sorting algorithms.
+5.  Click **Step** to inspect individual operations or **Start** for
+    automatic playback.
+6.  Adjust the animation speed if needed.
+7.  Observe the bar highlights, activity log, and counters.
+8.  Reset and try another algorithm with the same input to compare its
+    behavior.
 
-#### Windows and Linux
+## Understanding the Visualization
 
-```bash
-deactivate
-```
+-   **Blue bars:** values not currently highlighted.
+-   **Yellow bars:** values being compared.
+-   **Pink bars:** values being swapped or written.
+-   **Purple bars:** pivot selection in Quick Sort.
+-   **Green bars:** positions marked as sorted.
 
-## 7. How to Use SortLab
+The activity log describes the current operation, while counters update
+as visualization operations are applied.
 
-1. Open `http://127.0.0.1:8000/`.
-2. Enter a list such as `42, 18, 63, 7, 31`.
-3. Click **Use these numbers**.
-4. Select a sorting algorithm from the dropdown menu.
-5. Click **Step** to inspect operations one at a time, or click **Start** for animated playback.
-6. Adjust the speed slider if required.
-7. Observe the highlighted bars, activity log, and statistics.
-8. Try another algorithm with the same input to compare its behavior.
-9. Use **Reset** to return to the original input before replaying the algorithm.
+### Interpreting measurements
 
-## 8. Understanding the Visualization
+Comparison, move/write, and operation totals are counters tracked by the
+visualizer. The elapsed-time display measures playback time; it is not a
+controlled benchmark of actual algorithm execution speed. The visualizer
+prepares an operation sequence so it can demonstrate the process step by
+step.
 
-- **Blue bars:** values not currently highlighted.
-- **Yellow bars:** values being compared.
-- **Pink bars:** values being swapped or written.
-- **Purple bars:** pivot selection in Quick Sort.
-- **Green bars:** positions marked as sorted.
+## Complexity Reference
 
-The activity log describes the current operation. The counters update as the visualizer applies operations.
+  Algorithm          Average time   Worst-case time                 Typical extra space
+  ---------------- -------------- ----------------- -----------------------------------
+  Bubble Sort               O(n²)             O(n²)                                O(1)
+  Selection Sort            O(n²)             O(n²)                                O(1)
+  Insertion Sort            O(n²)             O(n²)                                O(1)
+  Merge Sort           O(n log n)        O(n log n)                                O(n)
+  Quick Sort           O(n log n)             O(n²)   O(log n) average; O(n) worst case
 
-**Note about measurements:** The displayed comparison, move/write, and operation counts are counts tracked by this visualizer. The elapsed time is playback time, not a formal benchmark of each algorithm’s real execution speed. The visualizer generates an operation sequence before playback so it can demonstrate the algorithm step by step.
+## Design Decisions and Limitations
 
-## 9. Algorithm Complexity Reference
+-   **Browser-side sorting:** JavaScript updates the visualization
+    without sending each operation to the server.
+-   **Django as the web layer:** Django serves the page and organizes
+    URL routing; a custom database model is unnecessary for the current
+    workflow.
+-   **Learning-focused measurements:** animations and counters explain
+    algorithm behavior rather than provide rigorous performance
+    benchmarks.
+-   **No saved user history:** arrays and results are not currently
+    linked to user accounts or stored persistently.
+-   **Input limit:** the visualizer accepts up to 80 values to keep the
+    animation manageable.
 
-| Algorithm | Average Time Complexity | Worst-case Time Complexity | Typical Extra Space |
-|---|---:|---:|---:|
-| Bubble Sort | O(n²) | O(n²) | O(1) |
-| Selection Sort | O(n²) | O(n²) | O(1) |
-| Insertion Sort | O(n²) | O(n²) | O(1) |
-| Merge Sort | O(n log n) | O(n log n) | O(n) |
-| Quick Sort | O(n log n) | O(n²) | O(log n) average, O(n) worst case |
-
-Actual performance depends on the input data and implementation.
-
-## 10. Troubleshooting
+## Troubleshooting
 
 ### `python: can't open file 'manage.py'`
 
-The terminal is not in the folder containing `manage.py`. Run `dir` on Windows or `ls` on Linux, then change to the correct folder.
+Change to the project directory that contains `manage.py`.
 
 ### `ModuleNotFoundError: No module named 'django'`
 
-Activate the project's virtual environment and install dependencies:
+Activate the virtual environment and run:
 
-```bash
+``` bash
 python -m pip install -r requirements.txt
 ```
 
-### Virtual environment activation says the path cannot be found
+### Virtual environment activation fails
 
-Check where `.venv` is located. Windows uses `.venv\Scripts\...`; Linux uses `.venv/bin/activate`.
-
-### Linux says `python3: command not found`
-
-Install Python 3 and the virtual environment package using your Linux distribution's package manager.
+Check the activation path. Windows uses `.venv\Scripts\...`; Linux uses
+`.venv/bin/activate`.
 
 ### Port 8000 is already in use
 
-Stop the other server with **Ctrl + C**, or run:
+Run the server on another port:
 
-```bash
+``` bash
 python manage.py runserver 8001
 ```
 
-Then visit **http://127.0.0.1:8001/**.
+### CSS or JavaScript does not load
 
-### Static CSS or JavaScript files do not load
+Confirm the files exist at the paths shown above and that the template
+references them with Django's static-file tags. Check the browser
+developer console and Django logs for errors.
 
-Check that the CSS and JavaScript files exist at the paths shown in the project structure, and confirm that the template uses Django's static-file tags correctly. Review the terminal and browser developer console for errors.
+## Future Improvements
 
-## 11. Limitations and Future Improvements
+-   Add side-by-side visualization for comparing algorithms on the same
+    input.
+-   Add Heap Sort, Counting Sort, and Radix Sort.
+-   Compare theoretical complexity with observed operation counts.
+-   Add downloadable sorting summaries and quiz questions.
+-   Improve keyboard accessibility and add explanatory annotations.
+-   Add automated tests for sorting correctness and interface behavior.
 
-### Current limitations
+## Summary
 
-- The application is intended for learning and local demonstration.
-- User-entered arrays are handled in the browser and are not saved to a user account or database.
-- The elapsed display measures visualization playback rather than a controlled algorithm benchmark.
-- The project does not currently include authentication or persistent data storage.
+SortLab demonstrates how sorting algorithms transform an array through
+custom input, animated bars, step-by-step playback, an activity log,
+operation counters, and complexity references. It combines a Django web
+layer with browser-based JavaScript visualization to make algorithm
+behavior easier to explore.
 
-### Possible future improvements
+------------------------------------------------------------------------
 
-- Add a side-by-side algorithm comparison mode.
-- Add more sorting algorithms, such as Heap Sort, Counting Sort, and Radix Sort.
-- Add a theoretical-versus-observed operation-count comparison.
-- Add downloadable sorting reports and quiz questions.
-- Improve keyboard accessibility and add more visualization explanations.
-
-## 12. Conclusion
-
-SortLab provides an interactive way to study five widely used sorting algorithms. By combining custom input, animated bars, step-by-step playback, an activity log, and complexity information, it helps learners connect algorithm logic with the changes made to an array. Django serves the application, while JavaScript handles the interactive sorting visualization in the browser.
-
----
-
-**Project name:** SortLab — Interactive Sorting Algorithm Visualizer  
-**Application framework:** Django  
-**Front-end:** HTML, CSS, JavaScript  
-**Supported setup instructions:** Windows and Linux  
-**Run locally:** `python manage.py runserver`
+**Project:** SortLab --- Interactive Sorting Algorithm Visualizer\
+**Framework:** Django\
+**Front end:** HTML, CSS, JavaScript\
+**Purpose:** Learn and compare sorting algorithms through visualization
