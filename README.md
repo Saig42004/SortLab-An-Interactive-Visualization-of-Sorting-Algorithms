@@ -694,10 +694,7 @@ For sorting algorithm changes, test relevant edge cases such as empty
 input, one element, duplicate values, already-sorted input,
 reverse-sorted input, and negative values where supported.
 
-## License
 
-No license is declared in this README. Check the repository for a
-`LICENSE` file before reusing, modifying, or redistributing the project.
 
 ------------------------------------------------------------------------
 
