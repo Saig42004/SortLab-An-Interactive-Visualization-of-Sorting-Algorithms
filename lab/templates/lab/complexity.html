@@ -1,0 +1,82 @@
+{% extends "lab/base.html" %}
+
+{% block title %}Complexity — SortLab{% endblock %}
+
+{% block content %}
+<main class="inner-main">
+
+  <!-- Page heading -->
+  <div class="page-heading">
+    <div class="section-kicker">
+      <span>03</span><i></i> TIME / SPACE ANALYSIS
+    </div>
+    <h1>Performance has<br><em>a pattern.</em></h1>
+    <p>Compare best, average and worst-case time costs, plus the extra memory used by each method.</p>
+  </div>
+
+  <div class="complexity-dashboard standalone-complexity">
+
+    <!-- Growth curves chart -->
+    <div class="complexity-chart-panel">
+      <div class="complexity-panel-head">
+        <span>GROWTH CURVES</span>
+        <span>ILLUSTRATIVE · NOT BENCHMARK DATA</span>
+      </div>
+
+      <svg class="mini-complexity-chart" viewBox="0 0 520 190" role="img" aria-label="Illustrative complexity growth curves">
+        <g class="chart-grid">
+          <path d="M35 20H505M35 65H505M35 110H505M35 155H505"/>
+          <path d="M35 20V155M152 20V155M270 20V155M387 20V155M505 20V155"/>
+        </g>
+        <path class="chart-linear" d="M35 151 C150 149 270 144 505 126"/>
+        <path class="chart-nlogn" d="M35 151 C140 146 240 127 330 96 S440 55 505 30"/>
+        <path class="chart-quadratic" d="M35 151 C155 150 255 137 330 111 S440 55 505 8"/>
+      </svg>
+
+      <div class="chart-legend">
+        <span><i class="linear-dot"></i> O(n)</span>
+        <span><i class="nlog-dot"></i> O(n log n)</span>
+        <span><i class="quad-dot"></i> O(n²)</span>
+      </div>
+    </div>
+
+    <!-- Algorithm costs table -->
+    <div class="complexity-table-panel">
+      <div class="complexity-panel-head">
+        <span>ALGORITHM COSTS</span>
+        <span>REFERENCE</span>
+      </div>
+
+      <table class="complexity-table">
+        <thead>
+          <tr>
+            <th>ALGORITHM</th>
+            <th>BEST</th>
+            <th>AVERAGE</th>
+            <th>WORST</th>
+            <th>SPACE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in algorithms %}
+          <tr>
+            <td><a href="{% url 'algorithm_detail' item.slug %}">{{ item.name }}</a></td>
+            <td>{{ item.best }}</td>
+            <td>{{ item.average }}</td>
+            <td>{{ item.worst }}</td>
+            <td>{{ item.space }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p class="complexity-footnote">
+        Shell Sort depends on its gap sequence. Counting Sort assumes a bounded integer range.
+        Quick Sort has a quadratic worst case.
+      </p>
+    </div>
+
+  </div>
+
+</main>
+{% endblock %}

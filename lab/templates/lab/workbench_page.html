@@ -1,0 +1,22 @@
+{% extends "lab/base.html" %}
+
+{% block title %}The Lab — SortLab{% endblock %}
+
+{% block body_class %}inner-page workbench-page{% endblock %}
+
+{% block content %}
+<main class="inner-main">
+
+  <!-- Page heading -->
+  <div class="page-heading">
+    <div class="section-kicker">
+      <span>01</span><i></i> INTERACTIVE WORKSPACE
+    </div>
+    <h1>Run the experiment.<br><em>Read the evidence.</em></h1>
+    <p>Enter values, select a sorting method, and inspect the exact operations that put the array in order.</p>
+  </div>
+
+  {% include "lab/workbench.html" %}
+
+</main>
+{% endblock %}

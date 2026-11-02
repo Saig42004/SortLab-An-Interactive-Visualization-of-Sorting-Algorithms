@@ -1,0 +1,75 @@
+{% extends "lab/base.html" %}
+
+{% block title %}{{ algorithm.name }} — SortLab{% endblock %}
+
+{% block content %}
+<main class="inner-main algorithm-detail-page">
+
+  <!-- Page heading -->
+  <div class="page-heading">
+    <div class="section-kicker">
+      <span>ALGORITHM / {{ algorithm.id|upper }}</span><i></i> METHOD STUDY
+    </div>
+    <h1>{{ algorithm.name }}.<br><em>Understand the logic.</em></h1>
+    <p>{{ algorithm.short }}</p>
+  </div>
+
+  <!-- Theory -->
+  <section class="theory-panel">
+
+    <div class="theory-copy">
+      <div class="panel-kicker">HOW IT WORKS</div>
+      <p>{{ algorithm.theory }}</p>
+
+      <div class="theory-steps">
+        <h3>THE PROCESS</h3>
+        <ol>
+          {% for step in algorithm.steps %}
+          <li>{{ step }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      <div class="example-line">
+        <span>EXAMPLE</span>
+        <code>{{ algorithm.example }}</code>
+      </div>
+    </div>
+
+    <div class="complexity-facts">
+      <div>
+        <small>BEST TIME</small>
+        <b>{{ algorithm.best }}</b>
+      </div>
+      <div>
+        <small>AVERAGE TIME</small>
+        <b>{{ algorithm.average }}</b>
+      </div>
+      <div>
+        <small>WORST TIME</small>
+        <b>{{ algorithm.worst }}</b>
+      </div>
+      <div>
+        <small>SPACE</small>
+        <b>{{ algorithm.space }}</b>
+      </div>
+      <div>
+        <small>STABLE</small>
+        <b>{{ algorithm.stable }}</b>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Live workbench -->
+  <div class="detail-workbench-heading">
+    <div class="section-kicker">
+      <span>LIVE TRACE</span><i></i> TRY THIS METHOD
+    </div>
+    <p>This workbench is preloaded with {{ algorithm.name }}. Change the values and step through the operations.</p>
+  </div>
+
+  {% include "lab/workbench.html" %}
+
+</main>
+{% endblock %}

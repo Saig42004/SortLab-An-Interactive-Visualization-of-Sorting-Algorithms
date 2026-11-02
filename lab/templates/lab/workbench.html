@@ -1,0 +1,146 @@
+<section class="page-section lab-section section-pad" id="lab">
+
+  <!-- Section heading -->
+  <div class="section-kicker reveal"><span>04</span><i></i> SORTING WORKBENCH</div>
+
+  <div class="section-title-row reveal">
+    <h2>Run the experiment.<br><span class="muted-serif">Read the evidence.</span></h2>
+    <p>Enter your own values. Pick an algorithm. Step through the exact operations that put the array in order.</p>
+  </div>
+
+  <div class="lab-shell reveal">
+
+    <!-- =====================================================
+         Sidebar: input, method, speed, size, controls
+         ===================================================== -->
+    <aside class="lab-sidebar">
+
+      <!-- Input array -->
+      <div class="lab-group">
+        <label for="numbers">INPUT / ARRAY</label>
+        <textarea id="numbers" rows="3">42, 18, 63, 7, 31, 55, 12, 84</textarea>
+        <div class="lab-buttons">
+          <button id="apply" class="small-btn lime">Apply values ↗</button>
+          <button id="random" class="small-btn">Randomize</button>
+        </div>
+        <small class="hint">Up to 80 values · integers and decimals</small>
+      </div>
+
+      <!-- Method select -->
+      <div class="lab-group {% if algorithm %}locked-method{% endif %}">
+        <label for="algorithm">METHOD / SELECT</label>
+        <select id="algorithm" data-selected="{{ algorithm.id|default:'bubble' }}" {% if algorithm %}disabled{% endif %}></select>
+        <div id="algoInfo" class="algo-info">Average O(n²) · Space O(1)</div>
+      </div>
+
+      <!-- Playback speed -->
+      <div class="lab-group">
+        <label for="speed">PLAYBACK SPEED</label>
+        <input type="range" id="speed" min="1" max="100" value="55">
+        <div class="range-ends">
+          <span>DELIBERATE</span>
+          <span>FAST</span>
+        </div>
+      </div>
+
+      <!-- Random array size -->
+      <div class="lab-group">
+        <label for="arraySize">RANDOM ARRAY / <b id="sizeLabel">18</b></label>
+        <input type="range" id="arraySize" min="5" max="60" value="18">
+      </div>
+
+      <!-- Transport controls -->
+      <div class="lab-group">
+        <label>CONTROLS / TRANSPORT</label>
+        <div class="transport">
+          <button id="play" class="small-btn lime">▶ Play</button>
+          <button id="step" class="small-btn">Step →</button>
+          <button id="pause" class="small-btn">Ⅱ Pause</button>
+          <button id="reset" class="small-btn">↺ Reset</button>
+          <button id="instant" class="small-btn wide">Sort instantly ↗</button>
+        </div>
+        <small class="hint" id="status">Ready. Choose Play or Step.</small>
+      </div>
+
+    </aside>
+
+    <!-- =====================================================
+         Main lab content
+         ===================================================== -->
+    <div class="lab-content">
+
+      <!-- Stage -->
+      <div class="lab-stage">
+        <div class="stage-head">
+          <div>
+            <small>ACTIVE METHOD</small>
+            <h3 id="activeTitle">Bubble Sort</h3>
+          </div>
+          <span class="stage-live"><i></i> LIVE TRACE</span>
+        </div>
+
+        <div class="legend">
+          <span><i class="u"></i> Unsorted</span>
+          <span><i class="c"></i> Compare</span>
+          <span><i class="s"></i> Swap / write</span>
+          <span><i class="d"></i> Sorted</span>
+        </div>
+
+        <div class="array-bars" id="arrayBars"></div>
+        <div class="array-values" id="arrayValues"></div>
+
+        <div class="stage-foot">
+          <span id="operation">Waiting for first operation…</span>
+          <span id="progress">0 / 0</span>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="lab-metrics">
+        <div>
+          <small>COMPARISONS</small>
+          <b id="comparisons">0</b>
+        </div>
+        <div>
+          <small>WRITES / SWAPS</small>
+          <b id="writes">0</b>
+        </div>
+        <div>
+          <small>OPERATIONS</small>
+          <b id="operations">0</b>
+        </div>
+        <div>
+          <small>ELAPSED</small>
+          <b id="elapsed">0.0s</b>
+        </div>
+      </div>
+
+      <!-- Bottom: complexity table + operation log -->
+      <div class="lab-bottom">
+
+        <div class="lab-table">
+          <div class="bottom-heading">COMPLEXITY REFERENCE <span>AVG / SPACE</span></div>
+          <table>
+            <thead>
+              <tr>
+                <th>METHOD</th>
+                <th>TIME</th>
+                <th>SPACE</th>
+              </tr>
+            </thead>
+            <tbody id="complexityRows"></tbody>
+          </table>
+        </div>
+
+        <div class="lab-log">
+          <div class="bottom-heading">OPERATION TRACE <button id="clearLog">CLEAR</button></div>
+          <ol id="log">
+            <li class="empty-log">Your operation history will appear here.</li>
+          </ol>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
