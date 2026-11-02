@@ -143,52 +143,29 @@ SortLab includes these eight sorting algorithms:
 
 ## Time and Space Complexity
 
-The following table gives the standard theoretical complexity of each
-algorithm. These are algorithm-analysis references, not benchmark
-measurements produced by the application.
+The table below summarizes the standard theoretical time and auxiliary-space complexity of the eight algorithms. These are theoretical references, not benchmark measurements produced by SortLab.
 
-  ----------------------------------------------------------------------------
-  Algorithm           Best Time   Average Time     Worst Time  Auxiliary Space
-  -------------- -------------- -------------- -------------- ----------------
-  Bubble Sort\*            O(n)          O(n²)          O(n²)             O(1)
-
-  Selection Sort          O(n²)          O(n²)          O(n²)             O(1)
-
-  Insertion Sort           O(n)          O(n²)          O(n²)             O(1)
-
-  Merge Sort         O(n log n)     O(n log n)     O(n log n)             O(n)
-
-  Quick Sort\*\*     O(n log n)     O(n log n)          O(n²)         O(log n)
-                                                                 average; O(n)
-                                                                         worst
-
-  Heap Sort          O(n log n)     O(n log n)     O(n log n)         O(1) for
-                                                                      in-place
-                                                                implementation
-
-  Shell          Depends on gap Depends on gap Depends on gap             O(1)
-  Sort\*\*\*           sequence       sequence       sequence 
-
-  Counting             O(n + k)       O(n + k)       O(n + k)         O(n + k)
-  Sort\*\*\*\*                                                
-  ----------------------------------------------------------------------------
+| Algorithm | Best Time | Average Time | Worst Time | Auxiliary Space |
+|---|---:|---:|---:|---:|
+| Bubble Sort* | O(n) | O(n²) | O(n²) | O(1) |
+| Selection Sort | O(n²) | O(n²) | O(n²) | O(1) |
+| Insertion Sort | O(n) | O(n²) | O(n²) | O(1) |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) |
+| Quick Sort** | O(n log n) | O(n log n) | O(n²) | O(log n) average; O(n) worst |
+| Heap Sort | O(n log n) | O(n log n) | O(n log n) | O(1) for an in-place implementation |
+| Shell Sort*** | Depends on gap sequence | Depends on gap sequence | Depends on gap sequence | O(1) |
+| Counting Sort**** | O(n + k) | O(n + k) | O(n + k) | O(n + k) |
 
 **Notes**
 
--   `n` is the number of elements in the input.
--   `k` is the range of integer keys in Counting Sort.
--   `*` Bubble Sort's best case is O(n) when the implementation stops
-    early if a pass makes no swaps. Without that optimization, the best
-    case is O(n²).
--   `**` Quick Sort's auxiliary space depends on recursion depth and
-    partition behavior.
--   `***` Shell Sort's exact time complexity depends on the chosen gap
-    sequence and implementation. There is no single universal bound for
-    all Shell Sort variants.
--   `****` Counting Sort assumes integer keys in a manageable range. Its
-    complexity depends on both the number of elements and the key range.
+- `n` is the number of elements in the input.
+- `k` is the range of integer keys in Counting Sort.
+- `*` Bubble Sort's best case is O(n) when the implementation stops early if a pass makes no swaps. Without that optimization, its best case is O(n²).
+- `**` Quick Sort's auxiliary space depends on recursion depth and partition behavior.
+- `***` Shell Sort's exact time complexity depends on the chosen gap sequence and implementation; there is no single universal bound for all variants.
+- `****` Counting Sort assumes integer keys in a manageable range. Its complexity depends on both the number of elements and the key range.
 
-------------------------------------------------------------------------
+---
 
 ## Technology Stack
 
