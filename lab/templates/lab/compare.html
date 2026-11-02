@@ -1,0 +1,54 @@
+{% extends "lab/base.html" %}
+
+{% block title %}Compare Algorithms — SortLab{% endblock %}
+
+{% block content %}
+<main class="inner-main">
+
+  <!-- Page heading -->
+  <div class="page-heading">
+    <div class="section-kicker">
+      <span>04</span><i></i> SIDE-BY-SIDE ANALYSIS
+    </div>
+    <h1>One dataset.<br><em>Two strategies.</em></h1>
+    <p>Run two sorting methods against the same input and compare their operation counts.</p>
+  </div>
+
+  <!-- Comparison tool -->
+  <section class="compare-box compare-standalone">
+
+    <div class="compare-input">
+      <label for="compareNumbers">INPUT ARRAY</label>
+      <textarea id="compareNumbers" rows="2">42, 18, 63, 7, 31, 55, 12, 84</textarea>
+    </div>
+
+    <div class="compare-selects">
+      <div>
+        <label for="compareA">METHOD A</label>
+        <select id="compareA">
+          {% for item in algorithms %}
+          <option value="{{ item.id }}">{{ item.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="compareB">METHOD B</label>
+        <select id="compareB">
+          {% for item in algorithms %}
+          <option value="{{ item.id }}">{{ item.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button id="compareRun" class="button button-bright magnetic">Run comparison ↗</button>
+    </div>
+
+    <div id="compareResult" class="compare-result">
+      <p>Choose two methods and run a comparison to see the work side by side.</p>
+    </div>
+
+  </section>
+
+</main>
+{% endblock %}

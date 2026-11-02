@@ -1,0 +1,63 @@
+{% extends "lab/base.html" %}
+
+{% block title %}About SortLab{% endblock %}
+
+{% block content %}
+<main class="inner-main">
+
+  <div class="page-heading">
+    <div class="section-kicker">
+      <span>05</span><i></i> ABOUT THE PROJECT
+    </div>
+    <h1>Make the logic<br><em>visible.</em></h1>
+    <p>SortLab is an interactive learning project for understanding how sorting algorithms make decisions.</p>
+  </div>
+
+  <section class="about-grid">
+
+    <article class="about-panel">
+      <span class="panel-kicker">THE PURPOSE</span>
+      <h2>From final output<br>to visible process.</h2>
+      <p>
+        Sorting is often taught through pseudocode and final arrays. SortLab exposes the
+        operations between those two points: comparisons, swaps, writes, partitions and
+        sorted regions.
+      </p>
+    </article>
+
+    <article class="about-panel">
+      <span class="panel-kicker">THE TECHNOLOGY</span>
+      <ul>
+        <li>
+          <b>Python</b>
+          <span>Django application and URL routing</span>
+        </li>
+        <li>
+          <b>HTML / CSS</b>
+          <span>Responsive interface and visual system</span>
+        </li>
+        <li>
+          <b>JavaScript</b>
+          <span>Sorting traces, playback and comparison</span>
+        </li>
+        <li>
+          <b>SQLite</b>
+          <span>Default Django database configuration</span>
+        </li>
+      </ul>
+    </article>
+
+  </section>
+
+  <section class="about-panel about-note">
+    <span class="panel-kicker">ARCHITECTURE NOTE</span>
+    <p>
+      Django serves the pages and static assets. Sorting operations are generated and
+      animated in the browser using JavaScript. The current project does not store
+      user-entered arrays or results in the database.
+    </p>
+    <a class="button button-bright" href="{% url 'workbench' %}">Enter the lab ↗</a>
+  </section>
+
+</main>
+{% endblock %}

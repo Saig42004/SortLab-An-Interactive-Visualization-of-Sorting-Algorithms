@@ -1,0 +1,205 @@
+{% extends "lab/base.html" %}
+
+{% block title %}SortLab — The logic in motion{% endblock %}
+
+{% block body_class %}home-page{% endblock %}
+
+{% block content %}
+<main class="home-main">
+
+  <!-- =====================================================
+       Hero
+       ===================================================== -->
+  <section class="hero home-hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb orb-one"></div>
+    <div class="hero-orb orb-two"></div>
+
+    <!-- Hero content -->
+    <div class="hero-content reveal">
+      <div class="overline">
+        <span class="overline-line"></span> HUMAN IDEAS / MACHINE LOGIC
+        <span class="overline-id">SX—001</span>
+      </div>
+
+      <h1>
+        THE LOGIC<br>
+        <span class="serif-word">IN MOTION.</span><span class="hero-period">●</span>
+      </h1>
+
+      <p class="hero-lede">
+        A visual workspace for understanding sorting. Explore each method, inspect every
+        operation, and compare the cost behind the result.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button button-bright magnetic" href="{% url 'workbench' %}">
+          <span class="play-icon">▶</span> Start exploring <span class="arrow">↗</span>
+        </a>
+        <a class="text-action magnetic" href="{% url 'algorithms' %}">
+          Explore the methods <span>↓</span>
+        </a>
+      </div>
+
+      <div class="hero-footnote">
+        <span>01 / INTERACTIVE LEARNING</span>
+        <span>BUILT FOR CURIOSITY</span>
+      </div>
+    </div>
+
+    <!-- Hero visual -->
+    <div class="hero-visual sort-hero-visual reveal" data-tilt>
+      <div class="visual-top">
+        <span>LIVE ARRAY / 08 ELEMENTS</span>
+        <span class="live-state"><i></i> IN MOTION</span>
+      </div>
+
+      <div class="hero-visual-title">
+        <span id="heroAlgorithm">BUBBLE SORT</span>
+        <span id="heroStep">ADJACENT COMPARISON 03</span>
+      </div>
+
+      <div class="hero-graph" id="heroGraph">
+        <div class="hero-bar" style="--h:42%"><b>42</b></div>
+        <div class="hero-bar hot" style="--h:18%"><b>18</b></div>
+        <div class="hero-bar" style="--h:63%"><b>63</b></div>
+        <div class="hero-bar" style="--h:7%"><b>07</b></div>
+        <div class="hero-bar" style="--h:31%"><b>31</b></div>
+        <div class="hero-bar" style="--h:55%"><b>55</b></div>
+        <div class="hero-bar" style="--h:12%"><b>12</b></div>
+        <div class="hero-bar" style="--h:84%"><b>84</b></div>
+      </div>
+
+      <div class="graph-axis">
+        <span>INPUT ARRAY</span>
+        <span id="heroOperation">COMPARE → SWAP</span>
+        <span>ASCENDING</span>
+      </div>
+
+      <div class="visual-bottom">
+        <div>
+          <small>COMPARISONS</small>
+          <b id="heroComparisons">018</b>
+        </div>
+        <div>
+          <small>SWAPS</small>
+          <b id="heroSwaps">006</b>
+        </div>
+        <div>
+          <small>TRACE</small>
+          <b>LIVE</b>
+        </div>
+        <div class="visual-bottom-mark">SORT<span>LAB</span></div>
+      </div>
+
+      <div class="visual-float">
+        <span class="float-symbol">↗</span>
+        <span>
+          <small>OPERATION 04</small>
+          <b>Comparing adjacent values</b>
+        </span>
+      </div>
+    </div>
+
+    <div class="hero-index">SCROLL TO EXPLORE <span>⌄</span></div>
+  </section>
+
+  <!-- =====================================================
+       Manifesto
+       ===================================================== -->
+  <section class="manifesto section-pad" id="story">
+    <div class="section-kicker reveal"><span>01</span><i></i> THE IDEA</div>
+
+    <div class="manifesto-grid">
+      <h2 class="reveal">
+        Code is static.<br>
+        <span class="muted-serif">Understanding</span><br>
+        shouldn't be.
+      </h2>
+
+      <div class="manifesto-copy reveal">
+        <p>
+          Sorting is more than a final ordered list. It's a sequence of decisions —
+          comparisons, shifts, partitions and tiny changes that add up.
+        </p>
+        <p>
+          SortLab turns that sequence into something you can watch, control and understand.
+          No black box. Just the algorithm, in motion.
+        </p>
+        <a class="underlink magnetic" href="{% url 'workbench' %}">Step inside the lab <span>↗</span></a>
+      </div>
+    </div>
+
+    <!-- Process track -->
+    <div class="process-track reveal">
+      <div class="process-step">
+        <span class="process-no">01</span>
+        <div class="process-node">INPUT</div>
+        <b>Set the data</b>
+        <small>Choose a sequence or generate one.</small>
+      </div>
+      <div class="process-step">
+        <span class="process-no">02</span>
+        <div class="process-node">TRACE</div>
+        <b>Follow the operations</b>
+        <small>Watch comparisons, swaps and writes.</small>
+      </div>
+      <div class="process-step">
+        <span class="process-no">03</span>
+        <div class="process-node">REASON</div>
+        <b>Read the complexity</b>
+        <small>Connect each strategy to its cost.</small>
+      </div>
+      <div class="process-step">
+        <span class="process-no">04</span>
+        <div class="process-node">COMPARE</div>
+        <b>Test the difference</b>
+        <small>Run two methods on the same input.</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       Continue exploring
+       ===================================================== -->
+  <section class="home-next section-pad">
+    <div class="section-kicker reveal"><span>02</span><i></i> CONTINUE EXPLORING</div>
+
+    <div class="home-next-grid">
+      <a class="home-next-card reveal" href="{% url 'algorithms' %}">
+        <span>01 / METHODS</span>
+        <h2>Choose a strategy.<br><em>Trace every decision.</em></h2>
+        <b>OPEN ALGORITHMS ↗</b>
+      </a>
+
+      <a class="home-next-card reveal" href="{% url 'complexity' %}">
+        <span>02 / ANALYSIS</span>
+        <h2>Performance has<br><em>a pattern.</em></h2>
+        <b>VIEW COMPLEXITY ↗</b>
+      </a>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       Closing
+       ===================================================== -->
+  <section class="closing section-pad" data-cursor="light">
+    <div class="closing-orb"></div>
+    <div class="section-kicker reveal"><span>03</span><i></i> END OF THE LINE</div>
+
+    <div class="closing-content reveal">
+      <h2>
+        Understand the steps.<br>
+        <span class="serif-word">Own the logic.</span>
+      </h2>
+      <a class="button button-bright magnetic" href="{% url 'workbench' %}">Enter the lab <span>↗</span></a>
+    </div>
+
+    <div class="closing-meta">
+      <span>SORTLAB / INTERACTIVE ALGORITHM LAB</span>
+      <span>MADE TO MAKE LOGIC VISIBLE</span>
+    </div>
+  </section>
+
+</main>
+{% endblock %}
