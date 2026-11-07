@@ -1,3 +1,4 @@
+
 {% load static %}
 <!doctype html>
 <html lang="en">
@@ -7,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080809">
   <meta name="description" content="SortLab — an interactive sorting algorithm visualizer built with Django and JavaScript.">
+
   <title>{% block title %}SortLab — The logic in motion{% endblock %}</title>
 
   <!-- Fonts -->
@@ -29,9 +31,7 @@
   <div class="pointer-light" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
-  <!-- =====================================================
-       Sidebar navigation
-       ===================================================== -->
+  <!-- Sidebar navigation -->
   <aside class="app-sidebar" id="appSidebar">
 
     <a class="wordmark sidebar-brand" href="{% url 'home' %}" aria-label="SortLab home">
@@ -44,36 +44,56 @@
     <nav class="side-nav" aria-label="Main navigation">
 
       <a class="side-link {% if active == 'lab' %}active{% endif %}" href="{% url 'workbench' %}">
-        <span class="side-icon">⌘</span><span>The lab</span>
+        <span class="side-icon">⌘</span>
+        <span>The lab</span>
       </a>
 
-      <!-- Algorithms (expandable) -->
+      <!-- Algorithms -->
       <div class="side-algorithm-wrap">
-        <a class="side-link side-algorithm-link {% if active == 'algorithms' %}active{% endif %}" href="{% url 'algorithms' %}">
-          <span class="side-icon">◫</span><span>Algorithms</span>
+
+        <a class="side-link side-algorithm-link {% if active == 'algorithms' %}active{% endif %}"
+           href="{% url 'algorithms' %}">
+          <span class="side-icon">◫</span>
+          <span>Algorithms</span>
         </a>
-        <button class="side-expand" id="algorithmToggle" aria-label="Expand algorithm list"
-                aria-expanded="{% if active == 'algorithms' %}true{% else %}false{% endif %}"
-                aria-controls="algorithmSubnav">⌄</button>
+
+        <button
+          class="side-expand"
+          id="algorithmToggle"
+          type="button"
+          aria-label="Expand algorithm list"
+          aria-expanded="{% if active == 'algorithms' %}true{% else %}false{% endif %}"
+          aria-controls="algorithmSubnav">
+          ⌄
+        </button>
+
       </div>
 
       <div class="side-subnav {% if active == 'algorithms' %}open{% endif %}" id="algorithmSubnav">
+
         {% for item in algorithms %}
-        <a class="side-sublink {% if algorithm.slug == item.slug %}active{% endif %}"
-           href="{% url 'algorithm_detail' item.slug %}">{{ item.name }}</a>
+        <a
+          class="side-sublink {% if algorithm.slug == item.slug %}active{% endif %}"
+          href="{% url 'algorithm_detail' item.slug %}">
+          {{ item.name }}
+        </a>
         {% endfor %}
+
       </div>
 
       <a class="side-link {% if active == 'complexity' %}active{% endif %}" href="{% url 'complexity' %}">
-        <span class="side-icon">⌁</span><span>Complexity</span>
+        <span class="side-icon">⌁</span>
+        <span>Complexity</span>
       </a>
 
       <a class="side-link {% if active == 'compare' %}active{% endif %}" href="{% url 'compare' %}">
-        <span class="side-icon">⇄</span><span>Compare</span>
+        <span class="side-icon">⇄</span>
+        <span>Compare</span>
       </a>
 
       <a class="side-link {% if active == 'about' %}active{% endif %}" href="{% url 'about' %}">
-        <span class="side-icon">ⓘ</span><span>About</span>
+        <span class="side-icon">ⓘ</span>
+        <span>About</span>
       </a>
 
     </nav>
@@ -85,49 +105,106 @@
 
   </aside>
 
-  <button class="sidebar-mobile-toggle" id="sidebarMobileToggle" aria-label="Open navigation">☰</button>
+  <!-- Sidebar open/close button -->
+  <button
+    class="sidebar-mobile-toggle"
+    id="sidebarMobileToggle"
+    type="button"
+    aria-label="Close navigation"
+    aria-expanded="true">
+    ‹
+  </button>
 
-  <!-- =====================================================
-       Main content & footer
-       ===================================================== -->
+  <!-- Main content -->
   <div class="app-main">
 
     {% block content %}{% endblock %}
 
+    <!-- Footer -->
     <footer class="footer app-footer">
+
       <a class="wordmark" href="{% url 'home' %}">
         <span class="mark"><i></i><i></i><i></i><i></i></span>
         <span>SORT<span class="x">LAB</span></span>
       </a>
+
       <span>Educational project · Design & Analysis of Algorithms</span>
       <span>PYTHON / DJANGO / JAVASCRIPT</span>
+
     </footer>
 
   </div>
 
   <!-- Sidebar toggle behavior -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Algorithm sub-menu toggle
-      const t = document.getElementById('algorithmToggle');
-      const s = document.getElementById('algorithmSubnav');
-      if (t && s) {
-        t.addEventListener('click', () => {
-          const open = s.classList.toggle('open');
-          t.setAttribute('aria-expanded', String(open));
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* =====================================
+         ALGORITHM SUBMENU
+      ===================================== */
+
+      const algorithmToggle = document.getElementById('algorithmToggle');
+      const algorithmSubnav = document.getElementById('algorithmSubnav');
+
+      if (algorithmToggle && algorithmSubnav) {
+
+        algorithmToggle.addEventListener('click', function () {
+
+          const isOpen = algorithmSubnav.classList.toggle('open');
+
+          algorithmToggle.setAttribute(
+            'aria-expanded',
+            String(isOpen)
+          );
+
         });
+
       }
 
-      // Mobile sidebar toggle
-      const m = document.getElementById('sidebarMobileToggle');
-      const a = document.getElementById('appSidebar');
-      if (m && a) {
-        m.addEventListener('click', () => a.classList.toggle('mobile-open'));
+
+      /* =====================================
+         MAIN SIDEBAR OPEN / CLOSE
+      ===================================== */
+
+      const sidebarToggle = document.getElementById('sidebarMobileToggle');
+      const sidebar = document.getElementById('appSidebar');
+
+      if (!sidebarToggle || !sidebar) return;
+
+      function updateSidebarButton() {
+
+        const isOpen = !document.body.classList.contains('sidebar-collapsed');
+
+        sidebarToggle.textContent = isOpen ? '‹' : '☰';
+
+        sidebarToggle.setAttribute(
+          'aria-expanded',
+          String(isOpen)
+        );
+
+        sidebarToggle.setAttribute(
+          'aria-label',
+          isOpen ? 'Close navigation' : 'Open navigation'
+        );
+
       }
+
+      // Toggle sidebar on desktop and mobile
+      sidebarToggle.addEventListener('click', function () {
+
+        document.body.classList.toggle('sidebar-collapsed');
+
+        updateSidebarButton();
+
+      });
+
+      // Set initial button state
+      updateSidebarButton();
+
     });
   </script>
 
   {% block extra_scripts %}{% endblock %}
-</body>
 
+</body>
 </html>

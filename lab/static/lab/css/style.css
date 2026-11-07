@@ -1,3 +1,4 @@
+
 /* =========================================================
  * PART 1 — BASE STYLES
  * ========================================================= */
@@ -4018,4 +4019,80 @@ body {
 
 .locked-method label {
   color: #ff6570;
+}
+
+
+/* =========================================================
+ * PART 7 — COLLAPSIBLE LEFT SIDEBAR
+ * ========================================================= */
+
+/* Desktop: show the sidebar control beside the navigation */
+.sidebar-mobile-toggle {
+  display: block;
+  position: fixed;
+  top: 18px;
+  left: calc(var(--sidebar-width) - 18px);
+  z-index: 80;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: #151013;
+  border: 1px solid #56343b;
+  border-radius: 8px;
+  color: #ff5964;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  transition: left 0.25s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar-mobile-toggle:hover {
+  background: #291419;
+  border-color: #f02b3a;
+}
+
+/* Desktop: hide the sidebar and let the page use the full width */
+@media (min-width: 701px) {
+  .app-sidebar {
+    transition: transform 0.25s ease;
+  }
+
+  .app-main {
+    transition: margin-left 0.25s ease;
+  }
+
+  body.sidebar-collapsed .app-sidebar {
+    transform: translateX(-102%);
+  }
+
+  body.sidebar-collapsed .app-main {
+    margin-left: 0;
+  }
+
+  body.sidebar-collapsed .sidebar-mobile-toggle {
+    left: 14px;
+  }
+}
+
+/* Mobile: preserve the existing slide-in sidebar behavior */
+@media (max-width: 700px) {
+  .sidebar-mobile-toggle {
+    left: 14px;
+    top: 14px;
+    z-index: 80;
+  }
+
+  .app-sidebar {
+    transition: transform 0.25s ease;
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .app-main {
+    margin-left: 0;
+  }
 }
